@@ -1,0 +1,154 @@
+---
+// ThemeToggle.astro - A button to switch between light and dark themes
+//
+// HOW IT WORKS:
+// 1. On page load, check localStorage for saved theme preference
+// 2. Apply the theme by setting data-theme="dark" on <html>
+// 3. When button clicked, toggle the theme and save to localStorage
+//
+// WHY CLIENT-SIDE JAVASCRIPT?
+// - Theme preference is stored in the browser (localStorage)
+// - We need JavaScript to read/write localStorage
+// - The script runs in the browser, not at build time
+---
+
+<!--
+  The toggle button
+  - Uses Unicode symbols for sun/moon icons (no external dependencies)
+  - aria-label for screen readers (accessibility)
+-->
+<button
+  id="theme-toggle"
+  class="theme-toggle"
+  aria-label="Toggle dark mode"
+  title="Toggle dark mode"
+>
+  <!-- Sun icon (shown in dark mode - click to go light) -->
+  <span class="theme-toggle__icon theme-toggle__icon--light">☀️</span>
+  <!-- Moon icon (shown in light mode - click to go dark) -->
+  <span class="theme-toggle__icon theme-toggle__icon--dark">🌙</span>
+</button>
+
+<style>
+  /*
+    Scoped CSS - these styles only apply to this component
+    This is one of Astro's best features: no CSS conflicts!
+  */
+
+  .theme-toggle {
+    /* Remove default button styles */
+    background: none;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, border-color 0.3s ease;
+
+    /* Position in header */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.1);
+  }
+
+  /* Icon visibility based on theme */
+  .theme-toggle__icon--light {
+    display: none; /* Hidden by default (light mode) */
+  }
+
+  .theme-toggle__icon--dark {
+    display: inline; /* Shown by default (light mode) */
+  }
+
+  /* When in dark mode, swap which icon is visible */
+  :global([data-theme="dark"]) .theme-toggle__icon--light {
+    display: inline;
+  }
+
+  :global([data-theme="dark"]) .theme-toggle__icon--dark {
+    display: none;
+  }
+</style>
+
+<script>
+  /*
+    CLIENT-SIDE JAVASCRIPT
+
+    This code runs in the user's browser, not at build time.
+    - is:inline tells Astro not to bundle this script
+    - We need this for localStorage access and DOM manipulation
+  */
+
+  // Function to get the current theme
+  function getTheme(): string {
+    // Check localStorage first
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      return savedTheme;
+    }
+
+    // If no saved preference, check system preference
+    // window.matchMedia checks if the user's OS is set to dark mode
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+
+    // Default to light
+    return 'light';
+  }
+
+  // Function to set the theme
+  function setTheme(theme: string): void {
+    // Set the data-theme attribute on <html>
+    // This triggers our CSS :root[data-theme="dark"] styles
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+
+    // Save to localStorage so it persists across page loads
+    localStorage.setItem('theme', theme);
+  }
+
+  // Initialize theme on page load
+  function initTheme(): void {
+    const theme = getTheme();
+    setTheme(theme);
+  }
+
+  // Toggle between light and dark
+  function toggleTheme(): void {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+  }
+
+  // Set up the toggle button
+  function setupToggle(): void {
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.addEventListener('click', toggleTheme);
+    }
+  }
+
+  // Run on initial page load
+  initTheme();
+  setupToggle();
+
+  // Also run after Astro page transitions (ViewTransitions)
+  // When you navigate between pages, Astro doesn't do a full reload
+  // So we need to re-initialize when the new page loads
+  document.addEventListener('astro:after-swap', () => {
+    initTheme();
+    setupToggle();
+  });
+</script>

@@ -1,0 +1,121 @@
+---
+// BaseLayout.astro - The main template that wraps all pages
+// This is equivalent to your Flask base.html template
+//
+// KEY DIFFERENCES FROM JINJA2:
+// - {{ variable }}  →  {variable}
+// - url_for('static', filename='css/styles.css')  →  /css/styles.css
+// - url_for('home')  →  /
+// - request.path  →  Astro.url.pathname
+// - {% block content %}  →  <slot />
+
+// Import ClientRouter for smooth page navigation animations
+// Note: In Astro 5+, ViewTransitions was renamed to ClientRouter
+// This is an Astro built-in feature - no npm install needed!
+import { ClientRouter } from 'astro:transitions';
+
+// Import ThemeToggle component for dark mode switching
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+// Props = data passed into this component (like function arguments in Python)
+interface Props {
+  title?: string;  // Optional page title (? means optional)
+}
+
+// Destructure props with default value
+const { title = "William Hu | Portfolio" } = Astro.props;
+
+// Get current URL path for active link highlighting
+// Astro.url.pathname returns the current page path (e.g., "/", "/about")
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+
+    <!-- Google Fonts (same as your Flask site) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Your CSS file (now at /css/styles.css instead of /static/css/styles.css) -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!--
+      ClientRouter enables smooth page transitions (like a native app)
+      When you click a link, instead of a full page reload:
+      1. The old page fades out
+      2. The new page fades in
+      This creates a much smoother user experience!
+    -->
+    <ClientRouter />
+
+    <!--
+      Inline script to prevent "flash of wrong theme"
+      This runs BEFORE the page renders, so users don't see a flash
+      of light mode if they prefer dark mode (or vice versa)
+
+      is:inline = don't bundle this, run it immediately
+    -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Theme toggle button (top-right corner) -->
+    <ThemeToggle />
+
+    <!-- Header with navigation -->
+    <header class="header">
+      <h1>William Hu</h1>
+
+      <nav class="nav">
+        <!--
+          Active link logic:
+          In Jinja2: class="nav__link {{'nav__link--active' if request.path == url_for('home')}}"
+          In Astro: class:list lets us conditionally add classes
+        -->
+        <a
+          href="/"
+          class:list={["nav__link", { "nav__link--active": currentPath === "/" }]}
+        >
+          Projects
+        </a>
+
+        <a
+          href="/about"
+          class:list={["nav__link", { "nav__link--active": currentPath === "/about" }]}
+        >
+          About
+        </a>
+
+        <!-- Resume opens in new tab (target="_blank") -->
+        <a href="/Resume.pdf" class="nav__link" target="_blank">
+          Resume
+        </a>
+      </nav>
+    </header>
+
+    <!-- Main content slot - child pages inject their content here -->
+    <!-- This replaces {% block content %}{% endblock %} from Jinja2 -->
+    <slot />
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__content">
+        <a class="footer__item" href="mailto:cj6fu6jo25@gmail.com" target="_blank">EMAIL</a>
+        <a class="footer__item" href="https://www.linkedin.com/in/william-hu-922261247" target="_blank">LINKEDIN</a>
+      </div>
+    </footer>
+  </body>
+</html>

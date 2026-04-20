@@ -1,0 +1,73 @@
+---
+// index.astro - The homepage (Projects listing)
+// This is equivalent to your Flask home.html template
+//
+// FILE PATH = URL:
+//   src/pages/index.astro  →  / (homepage)
+//   src/pages/about.astro  →  /about
+//   src/pages/projects/movie-tracking.astro  →  /projects/movie-tracking
+
+// Import the base layout (like {% extends "base.html" %} in Jinja2)
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Import project data from JSON file
+// In Astro, you can import JSON directly (like Python's json.load())
+import projects from '../data/projects.json';
+
+// TypeScript interface - describes the shape of a project object
+// This helps catch errors and provides autocomplete
+interface Project {
+  name: string;
+  thumb: string;      // Thumbnail image path
+  hero: string;       // Hero image path
+  categories: string[];
+  slug: string;       // URL-friendly name (e.g., "movie-tracking")
+}
+---
+
+<!--
+  Use BaseLayout - everything inside goes into <slot />
+  No title prop = uses default "William Hu | Portfolio"
+-->
+<BaseLayout>
+  <main class="main main--home">
+    <section class="projects">
+      <!--
+        Loop through projects:
+
+        Jinja2:  {% for project in projects %}
+        Astro:   {projects.map((project) => (...))}
+
+        .map() is JavaScript's way to loop over an array
+        It returns new HTML for each item
+      -->
+      {projects.map((project: Project) => (
+        <a class="u-bare-link" href={`/projects/${project.slug}`}>
+          {/*
+            Template literals (backticks) let you embed variables:
+            `/projects/${project.slug}` = "/projects/movie-tracking"
+
+            This replaces Jinja2's:
+            url_for('project', slug=project['slug'])
+          */}
+          <article class="project-card">
+            <img
+              class="project-card__image"
+              src={`/${project.thumb}`}
+              alt={`${project.name} thumbnail`}
+            />
+            <header class="project-card__meta">
+              <ul class="categories">
+                {/* Nested loop for categories */}
+                {project.categories.map((category) => (
+                  <li class="categories__tag">{category}</li>
+                ))}
+              </ul>
+              <h2 class="project-card__name">{project.name}</h2>
+            </header>
+          </article>
+        </a>
+      ))}
+    </section>
+  </main>
+</BaseLayout>
