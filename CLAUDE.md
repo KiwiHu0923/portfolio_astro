@@ -4,24 +4,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Flask-based portfolio website showcasing personal projects. The site uses server-side rendering with Jinja2 templates and serves static content including a PDF resume.
+This is a static portfolio website built with Astro, deployed on Vercel. The site showcases personal projects with a clean, responsive design featuring dark mode support.
+
+**Live Site**: https://astro-site-nine-puce.vercel.app
 
 ## Architecture
 
-### Core Application Structure
+### Tech Stack
 
-- **Main application**: [\_\_init\_\_.py](__init__.py) - Contains all Flask routes and application logic
-- **Project data**: [projects.json](projects.json) - JSON file serving as the project database (lazy loaded on each request)
-- **Templates**: `templates/` directory with Jinja2 HTML files
-  - [base.html](templates/base.html) - Base template with header navigation and footer
-  - [home.html](templates/home.html) - Project listing page (extends base)
-  - Individual project pages follow the pattern `project_{slug}.html`
-  - [404.html](templates/404.html) - Custom error page
-- **Static assets**: `static/` directory containing CSS, images, and Resume.pdf
+- **Framework**: Astro (static site generator)
+- **Styling**: CSS with custom properties for theming
+- **Deployment**: Vercel (static hosting with global CDN)
+- **Transitions**: Astro View Transitions (ClientRouter)
+
+### Project Structure
+
+```
+astro-site/
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   └── ThemeToggle.astro  # Dark mode toggle button
+│   ├── data/
+│   │   └── projects.json    # Project metadata
+│   ├── layouts/
+│   │   └── BaseLayout.astro # Main layout with nav/footer
+│   ├── pages/
+│   │   ├── index.astro      # Homepage (/)
+│   │   ├── about.astro      # About page (/about)
+│   │   ├── 404.astro        # Error page
+│   │   └── projects/
+│   │       └── movie-tracking.astro  # Project detail page
+│   └── styles/              # Additional stylesheets
+├── public/
+│   ├── css/styles.css       # Global stylesheet
+│   ├── img/                 # Images (thumbnails, heroes)
+│   └── Resume.pdf           # Downloadable resume
+├── astro.config.mjs         # Astro configuration
+├── package.json             # Node.js dependencies
+└── vercel.json              # Vercel deployment config
+```
 
 ### Key Design Patterns
 
-**Project System**: Projects are stored in [projects.json](projects.json) with the following structure:
+**Project System**: Projects are stored in `src/data/projects.json`:
 ```json
 {
   "name": "Project Name",
@@ -32,56 +57,85 @@ This is a Flask-based portfolio website showcasing personal projects. The site u
 }
 ```
 
-The `slug` field maps to a corresponding template file `templates/project_{slug}.html`. Each project page contains its own hardcoded content rather than storing descriptions in the JSON.
+Each project has a corresponding page at `src/pages/projects/{slug}.astro`.
 
-**Template Inheritance**: All pages extend [base.html](templates/base.html) using `{% extends "base.html" %}` and override the `content` block. The base template includes navigation with active link highlighting based on `request.path`.
+**Layout System**: All pages use `BaseLayout.astro` which provides:
+- HTML document structure with meta tags
+- Navigation with active link highlighting
+- Footer
+- Theme toggle component
+- View transitions (ClientRouter)
 
-**Database Migration**: The codebase previously used MongoDB (see git history) but was migrated to use JSON for simplicity. The `.env.example` still references `MONGODB_URI` but it's no longer used.
+**Theming**: Dark/light mode implemented via:
+- CSS custom properties (`:root` and `:root[data-theme="dark"]`)
+- localStorage for persistence
+- Inline script to prevent flash on page load
 
 ## Development Commands
 
-### Setup
 ```bash
+# Navigate to Astro project
+cd astro-site
+
 # Install dependencies
-pip install -r requirements.txt
+npm install
 
-# Install development tools (black, flake8)
-pip install -r requirements-dev.txt
+# Start development server (http://localhost:4321)
+npm run dev
 
-# Create environment file (currently only needed for legacy MongoDB reference)
-cp .env.example .env
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-### Running the Application
+## Deployment
+
 ```bash
-# Development server
-flask --app __init__ run
-
-# Production server with gunicorn
-gunicorn __init__:app
+# Deploy to Vercel production
+cd astro-site
+vercel --prod --yes
 ```
 
-### Code Quality
-```bash
-# Format code
-black __init__.py
-
-# Lint code
-flake8 __init__.py
-```
+See `.claude/skills.md` for detailed deployment procedures.
 
 ## Adding New Projects
 
-1. Add project metadata to [projects.json](projects.json) with a unique `slug`
-2. Create corresponding template file at `templates/project_{slug}.html`
-3. Ensure the template extends `base.html` and implements the `content` block
-4. Place thumbnail image at path specified in `thumb` field/
-5. Place hero image at path specified in `hero` field (both relative to `static/` directory)
+1. Add project metadata to `src/data/projects.json`
+2. Create page at `src/pages/projects/{slug}.astro`
+3. Import and use `BaseLayout` component
+4. Place images in `public/img/`
 
-## Important Notes
+Example project page structure:
+```astro
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
 
-- The navigation in [base.html](templates/base.html) uses `url_for()` for dynamic URL generation
-- Active navigation links are highlighted using conditional class `nav__link--active`
-- Resume is served directly from `static/Resume.pdf` via [\_\_init\_\_.py:34](__init__.py#L34)
-- Comments in templates are in Chinese, providing context for Jinja2 patterns
-- Project data is loaded fresh on each request (no caching) via `get_projects()`
+<BaseLayout title="Project Name | Portfolio">
+  <main class="main main--project">
+    <!-- Project content here -->
+  </main>
+</BaseLayout>
+```
+
+## Important Files
+
+| File | Purpose |
+|------|---------|
+| `src/layouts/BaseLayout.astro` | Main layout with nav, footer, theming |
+| `src/components/ThemeToggle.astro` | Dark mode toggle button |
+| `src/data/projects.json` | Project metadata |
+| `public/css/styles.css` | Global styles with CSS variables |
+| `vercel.json` | Vercel build configuration |
+
+## CSS Custom Properties
+
+Theme colors are defined in `public/css/styles.css`:
+- `--color-bg` - Background color
+- `--color-text` - Text color
+- `--color-accent` - Accent color
+- `--color-link` - Link color
+- `--color-card-bg` - Card background
+- `--color-footer-bg` - Footer background

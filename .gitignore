@@ -1,4 +1,23 @@
+# Python
 .env
 .venv/
 venv/
 __pycache__/
+
+# Vercel
+.vercel
+
+# Node.js (for astro-site/)
+node_modules/
+dist/
+.astro/
+npm-debug.log*
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+*.swp
+
+.claude

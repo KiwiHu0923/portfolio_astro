@@ -1,73 +1,46 @@
 ---
-// index.astro - The homepage (Projects listing)
-// This is equivalent to your Flask home.html template
-//
-// FILE PATH = URL:
-//   src/pages/index.astro  →  / (homepage)
-//   src/pages/about.astro  →  /about
-//   src/pages/projects/movie-tracking.astro  →  /projects/movie-tracking
+// index.astro - Profile/About page (Homepage)
+// Bio content only - profile sidebar is in BaseLayout
 
-// Import the base layout (like {% extends "base.html" %} in Jinja2)
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-// Import project data from JSON file
-// In Astro, you can import JSON directly (like Python's json.load())
-import projects from '../data/projects.json';
-
-// TypeScript interface - describes the shape of a project object
-// This helps catch errors and provides autocomplete
-interface Project {
-  name: string;
-  thumb: string;      // Thumbnail image path
-  hero: string;       // Hero image path
-  categories: string[];
-  slug: string;       // URL-friendly name (e.g., "movie-tracking")
-}
 ---
 
-<!--
-  Use BaseLayout - everything inside goes into <slot />
-  No title prop = uses default "William Hu | Portfolio"
--->
-<BaseLayout>
-  <main class="main main--home">
-    <section class="projects">
-      <!--
-        Loop through projects:
+<BaseLayout title="ChiWei Hu (William) | Portfolio">
+  <section class="bio-content">
+    <h2 class="bio__heading">About</h2>
 
-        Jinja2:  {% for project in projects %}
-        Astro:   {projects.map((project) => (...))}
+    <p>
+      I'm a Master's student in Computer Science at the
+      <a class="bio__link" href="https://www.usc.edu/">University of Southern California (USC)</a>,
+      with a background in biochemistry and systems engineering.
+    </p>
 
-        .map() is JavaScript's way to loop over an array
-        It returns new HTML for each item
-      -->
-      {projects.map((project: Project) => (
-        <a class="u-bare-link" href={`/projects/${project.slug}`}>
-          {/*
-            Template literals (backticks) let you embed variables:
-            `/projects/${project.slug}` = "/projects/movie-tracking"
+    <p>
+      Previously, I worked as a Software Engineer Intern at
+      <a class="bio__link" href="https://about.meta.com/">Meta</a> and as a Software Engineer at
+      <a class="bio__link" href="https://www.strongs.com.tw/">Strong Electro-Mechanical</a>,
+      gaining experience across both large-scale tech and industrial systems.
+      I received my Master's degree in Biochemistry from
+      <a class="bio__link" href="https://www.ntu.edu.tw/">National Taiwan University</a> and my Bachelor's degree in Life Science from
+      <a class="bio__link" href="https://www.ncku.edu.tw/">National Cheng Kung University</a>.
+    </p>
 
-            This replaces Jinja2's:
-            url_for('project', slug=project['slug'])
-          */}
-          <article class="project-card">
-            <img
-              class="project-card__image"
-              src={`/${project.thumb}`}
-              alt={`${project.name} thumbnail`}
-            />
-            <header class="project-card__meta">
-              <ul class="categories">
-                {/* Nested loop for categories */}
-                {project.categories.map((category) => (
-                  <li class="categories__tag">{category}</li>
-                ))}
-              </ul>
-              <h2 class="project-card__name">{project.name}</h2>
-            </header>
-          </article>
-        </a>
-      ))}
-    </section>
-  </main>
+    <h2 class="bio__heading">Experience</h2>
+
+    <p>
+      I have over two years of experience in software engineering, with a focus on backend systems, system integration, and performance-critical applications. My technical work spans C++, C#, Python, and Rust, along with experience in databases and distributed systems.
+    </p>
+
+    <p>
+      At Meta, I built a Rust-based CLI debugging tool on top of Apache Thrift to crawl and analyze records from a key-value store, improving issue triaging efficiency. I also implemented webhook replay functionality in the WhatsApp Business platform to ensure reliable cross-system message delivery.
+    </p>
+
+    <p>
+      At Strong, I developed automation systems for semiconductor manufacturing equipment, improving process efficiency and system reliability through SECS-based communication and real-time monitoring systems.
+    </p>
+
+    <p>
+      Beyond industry experience, I have built low-level systems such as an operating system kernel and developed multimedia processing pipelines, demonstrating strong fundamentals in systems programming and performance optimization.
+    </p>
+  </section>
 </BaseLayout>
