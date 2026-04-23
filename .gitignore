@@ -21,3 +21,7 @@ npm-debug.log*
 *.swp
 
 .claude
+
+# Local-only working notes (not tracked in git)
+CLAUDE.md
+TODO.md
