@@ -9,7 +9,56 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <section class="projects-content">
     <h1 class="projects__title">Projects</h1>
 
-    <!-- Project 1: Portfolio Website -->
+    <!-- Project 1: Multimedia Processing (most recent) -->
+    <article id="multimedia" class="project-item">
+      <div class="project-item__header">
+        <h2 class="project-item__name">Multimedia Processing Projects</h2>
+        <div class="project-item__links">
+          <a href="https://github.com/KiwiHu0923/csci-576" class="project-item__link" target="_blank" title="GitHub">
+            <svg class="project-item__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <p class="project-item__date">March 2026</p>
+      <ul class="project-item__tags">
+        <li class="project-item__tag">C++</li>
+        <li class="project-item__tag">Python</li>
+        <li class="project-item__tag">CMake</li>
+      </ul>
+      <ul class="project-item__bullets">
+        <li>Developed a content-adaptive image encoder/decoder in C++ using DCT transforms and quadtree-based block partitioning, achieving 25% quality improvement over JPEG with bitrates optimization</li>
+        <li>Implemented image processing pipeline with anti-aliasing filters and optimal histogram quantization, creating automated analysis tools to evaluate compression metrics</li>
+      </ul>
+    </article>
+
+    <!-- Project 2: Operating Systems Kernel -->
+    <article id="weenix" class="project-item">
+      <div class="project-item__header">
+        <h2 class="project-item__name">Operating Systems Kernel Project (Weenix)</h2>
+        <div class="project-item__links">
+          <a href="https://bitbucket.org/chiweihu/kernel1/src/main/kernel/" class="project-item__link" target="_blank" title="Bitbucket">
+            <svg class="project-item__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.778 1.213a.768.768 0 00-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 00.77-.646l3.27-20.03a.768.768 0 00-.768-.891zM14.52 15.53H9.522L8.17 8.466h7.561z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <p class="project-item__date">December 2025</p>
+      <ul class="project-item__tags">
+        <li class="project-item__tag">C</li>
+        <li class="project-item__tag">Kernel</li>
+        <li class="project-item__tag">VFS</li>
+        <li class="project-item__tag">Concurrency</li>
+      </ul>
+      <ul class="project-item__bullets">
+        <li>Implemented core OS subsystems in C, including process scheduling and virtual memory management, with correct synchronization across kernel threads</li>
+        <li>Developed system calls, pathname resolution, and VFS interfaces, while debugging concurrency issues (race conditions, deadlocks, memory corruption) in Ubuntu 16.04</li>
+      </ul>
+    </article>
+
+    <!-- Project 3: Portfolio Website (oldest) -->
     <article class="project-item">
       <div class="project-item__header">
         <h2 class="project-item__name">Personal Portfolio Website</h2>
@@ -21,58 +70,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </a>
         </div>
       </div>
+      <p class="project-item__date">September 2024</p>
       <ul class="project-item__tags">
+        <li class="project-item__tag">HTML/CSS</li>
         <li class="project-item__tag">Astro</li>
-        <li class="project-item__tag">TypeScript</li>
-        <li class="project-item__tag">CSS</li>
+        <li class="project-item__tag">Flask</li>
+        <li class="project-item__tag">Jinja</li>
       </ul>
-      <p class="project-item__description">
-        A static portfolio website built with Astro, featuring a clean academic-style design with dark mode support. The site showcases my professional background, experience, and projects with smooth view transitions and responsive layouts. Deployed on Vercel with global CDN distribution.
-      </p>
-    </article>
-
-    <!-- Project 2: Multimedia Processing -->
-    <article class="project-item">
-      <div class="project-item__header">
-        <h2 class="project-item__name">Multimedia Processing Pipeline</h2>
-        <div class="project-item__links">
-          <a href="https://github.com/KiwiHu0923/csci-576" class="project-item__link" target="_blank" title="GitHub">
-            <svg class="project-item__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      <ul class="project-item__tags">
-        <li class="project-item__tag">C++</li>
-        <li class="project-item__tag">Image Processing</li>
-        <li class="project-item__tag">Video Compression</li>
+      <ul class="project-item__bullets">
+        <li>Built a personal portfolio website, originally with HTML/CSS frontend and Flask + Jinja2 backend, later migrated to Astro for a static-first, high-performance rebuild</li>
+        <li>Deployed the application on Render and Vercel, delivering a scalable and production-ready hosting solution</li>
       </ul>
-      <p class="project-item__description">
-        A collection of multimedia processing projects from CSCI 576 at USC, covering image processing, video compression, and audio analysis. Implemented algorithms for color space conversion, DCT-based compression, motion estimation, and audio-video synchronization.
-      </p>
-    </article>
-
-    <!-- Project 3: Weenix Operating System -->
-    <article class="project-item">
-      <div class="project-item__header">
-        <h2 class="project-item__name">Weenix Operating System Kernel</h2>
-        <div class="project-item__links">
-          <a href="https://bitbucket.org/chiweihu/kernel1/src/main/kernel/" class="project-item__link" target="_blank" title="Bitbucket">
-            <svg class="project-item__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M.778 1.213a.768.768 0 00-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 00.77-.646l3.27-20.03a.768.768 0 00-.768-.891zM14.52 15.53H9.522L8.17 8.466h7.561z"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-      <ul class="project-item__tags">
-        <li class="project-item__tag">C</li>
-        <li class="project-item__tag">Operating Systems</li>
-        <li class="project-item__tag">Kernel Development</li>
-      </ul>
-      <p class="project-item__description">
-        A Unix-like operating system kernel developed as part of the Weenix project. Implemented core kernel subsystems including process and thread management, virtual memory with demand paging, and a virtual file system (VFS) layer supporting multiple file system types. Demonstrates strong fundamentals in systems programming and low-level development.
-      </p>
     </article>
 
   </section>

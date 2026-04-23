@@ -11,7 +11,7 @@
 
 /* Light mode (default) - Clean academic palette */
 :root {
-    --color-bg: #fafafa;
+    --color-bg: #e5e7ee;
     --color-text: #1a1a1a;
     --color-text-secondary: #666666;
     --color-heading: #111111;
@@ -19,11 +19,11 @@
     --color-accent-hover: #1d4ed8;
     --color-link: #2563eb;
     --color-link-hover: #1d4ed8;
-    --color-card-bg: #f3f4f6;
-    --color-card-border: #e5e7eb;
+    --color-card-bg: #ffffff;
+    --color-card-border: #d0d5de;
     --color-footer-bg: #18181b;
     --color-footer-text: #fafafa;
-    --color-border: #d1d5db;
+    --color-border: #bfc6d1;
 
     /* Typography */
     --font-sans: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -36,7 +36,7 @@
 
 /* Dark mode - Softer dark theme */
 :root[data-theme="dark"] {
-    --color-bg: #0f0f0f;
+    --color-bg: #0a0b14;
     --color-text: #e5e5e5;
     --color-text-secondary: #a3a3a3;
     --color-heading: #fafafa;
@@ -44,11 +44,11 @@
     --color-accent-hover: #93c5fd;
     --color-link: #60a5fa;
     --color-link-hover: #93c5fd;
-    --color-card-bg: #1a1a1a;
-    --color-card-border: #2a2a2a;
+    --color-card-bg: #1b1e2a;
+    --color-card-border: #2c2f3d;
     --color-footer-bg: #0a0a0a;
     --color-footer-text: #e5e5e5;
-    --color-border: #333333;
+    --color-border: #353848;
 }
 
 *,
@@ -63,6 +63,7 @@ html {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -471,73 +472,69 @@ a:hover {
 }
 
 /* ------------------------------------------------------------------ */
-/* Global Two-Column Layout */
+/* Global Layout - Two visually-matching cards (sidebar + content) */
 /* ------------------------------------------------------------------ */
 
 .layout {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 120px); /* Account for header */
-    padding: 2rem 1.5rem;
+    max-width: 1100px;
+    margin: 1.5rem auto 2.5rem;
+    padding: 0 1.25rem;
 }
 
-/* Left sidebar with profile info - Fixed and vertically centered */
 .profile-sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    flex-shrink: 0;
-    padding: 2rem 0;
+    margin-bottom: 1.5rem;
 }
 
 .profile-sidebar__inner {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: 16px;
 }
 
-/* Right side page content */
 .page-content {
-    flex: 1;
-    max-width: 700px;
-    padding: 1rem 0;
+    padding: 2rem 1.75rem;
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: 16px;
 }
 
-/* Desktop: Side by side layout with fixed sidebar */
+/* Desktop: sidebar fixed and vertically centered in viewport; content scrolls */
 @media (min-width: 768px) {
     .layout {
-        flex-direction: row;
-        gap: 4rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 1.5rem;
+        margin: 2rem auto 3rem;
     }
 
     .profile-sidebar {
         position: fixed;
-        left: 0;
+        left: max(1.5rem, calc((100vw - 1100px) / 2 + 1.5rem));
         top: 50%;
         transform: translateY(-50%);
-        width: 300px;
-        padding: 0 2rem;
+        width: 260px;
+        margin-bottom: 0;
     }
 
     .page-content {
-        margin-left: 320px;
-        padding: 3rem 2rem;
+        margin-left: calc(260px + 2rem);
+        padding: 2.5rem 2.5rem;
     }
 }
 
-/* Large screens: Centered layout */
-@media (min-width: 1200px) {
+/* Large screens */
+@media (min-width: 1100px) {
     .profile-sidebar {
-        left: calc((100vw - 1100px) / 2);
+        width: 280px;
     }
 
     .page-content {
-        margin-left: 350px;
-        max-width: 750px;
+        margin-left: calc(280px + 2.5rem);
+        padding: 3rem 3rem;
     }
 }
 
@@ -563,8 +560,11 @@ a:hover {
 }
 
 .profile__name-chinese {
-    margin: 0.5rem 0 1.25rem;
-    font-size: 1.1rem;
+    margin: 0.4rem 0 1.25rem;
+    font-family: 'Ma Shan Zheng', 'BiauKai', 'DFKaiShu-SB-Estd-BF', 'DFKai-SB', '標楷體', Kaiti, serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
     color: var(--color-text-secondary);
 }
 
@@ -603,7 +603,6 @@ a:hover {
 
 /* Right side bio content */
 .bio-content {
-    flex: 1;
     font-size: 1.05rem;
     line-height: 1.8;
 }
@@ -611,15 +610,25 @@ a:hover {
 .bio__heading {
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
+    margin-top: 2.25rem;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.4rem;
     border-bottom: 3px solid var(--color-accent);
     display: inline-block;
 }
 
+.bio__heading:first-child {
+    margin-top: 0;
+}
+
 .bio-content p {
+    margin-top: 0;
     margin-bottom: 1rem;
     color: var(--color-text);
+}
+
+.bio-content p + .bio__heading {
+    margin-top: 2.25rem;
 }
 
 .bio__link {
@@ -634,78 +643,115 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Technical keyword highlight (non-link) */
+.bio__keyword {
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
 
 /* ------------------------------------------------------------------ */
-/* Experience Page Styles */
+/* Experience Page - Timeline Styles */
 /* ------------------------------------------------------------------ */
 
 .experience {
     width: 100%;
 }
 
-.experience__section {
-    margin-bottom: 3rem;
+.timeline-section {
+    margin-bottom: 3.5rem;
 }
 
-.experience__heading {
-    font-size: 1.25rem;
+.timeline__heading {
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--color-heading);
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 3px solid var(--color-accent);
+    display: inline-block;
 }
 
-.experience__item {
-    margin-bottom: 1.5rem;
-    padding-left: 1rem;
-    border-left: 2px solid var(--color-accent);
-    transition: border-color var(--transition-fast);
+/* Timeline container: vertical line runs through the node column */
+.timeline {
+    position: relative;
+    padding-left: 0;
 }
 
-.experience__item:hover {
-    border-left-color: var(--color-accent-hover);
-}
-
-.experience__header {
+.timeline__item {
+    position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-bottom: 2rem;
 }
 
-.experience__title {
-    margin: 0;
-    font-size: 1.1rem;
+.timeline__item:last-child {
+    padding-bottom: 0;
+}
+
+/* Vertical connecting line - sits behind the nodes */
+.timeline__item::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 18px;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--color-border);
+}
+
+.timeline__item:last-child::before {
+    display: none;
+}
+
+/* The node (circle) sits on the line */
+.timeline__node {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 6px;
+    border-radius: 50%;
+    background-color: var(--color-bg);
+    border: 2px solid var(--color-accent);
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.timeline__item:hover .timeline__node {
+    background-color: var(--color-accent);
+    transform: scale(1.15);
+}
+
+.timeline__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.timeline__title {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
     font-weight: 600;
+    line-height: 1.4;
     color: var(--color-heading);
 }
 
-.experience__date {
-    font-size: 0.8rem;
-    font-family: var(--font-mono);
-    color: var(--color-text-secondary);
-    background-color: var(--color-card-bg);
-    padding: 0.2rem 0.5rem;
+.timeline__org {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    background-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+    padding: 0.2rem 0.6rem;
     border-radius: 4px;
 }
 
-.experience__org {
-    margin: 0.25rem 0 0.5rem;
-    color: var(--color-link);
-    font-weight: 500;
-}
-
-.experience__details {
+.timeline__date {
     margin: 0.5rem 0 0;
-    padding-left: 1.25rem;
-    line-height: 1.6;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
     color: var(--color-text-secondary);
-}
-
-.experience__details li {
-    margin-bottom: 0.25rem;
 }
 
 /* ------------------------------------------------------------------ */
@@ -766,14 +812,31 @@ a:hover {
 .project-item {
     margin-bottom: 2.5rem;
     padding: 1.5rem;
-    background-color: var(--color-card-bg);
+    background-color: var(--color-bg);
     border: 1px solid var(--color-card-border);
     border-radius: 8px;
-    transition: border-color var(--transition-fast);
+    scroll-margin-top: 1.5rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
 .project-item:hover {
     border-color: var(--color-accent);
+}
+
+/* Highlight when navigated to via #anchor (e.g. /projects#weenix) */
+.project-item:target {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+    animation: project-target-pulse 1.8s ease-out;
+}
+
+@keyframes project-target-pulse {
+    0% {
+        background-color: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg));
+    }
+    100% {
+        background-color: var(--color-bg);
+    }
 }
 
 .project-item__header {
@@ -842,5 +905,28 @@ a:hover {
     font-size: 1rem;
     line-height: 1.7;
     color: var(--color-text);
+}
+
+.project-item__date {
+    margin: 0 0 0.75rem;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-secondary);
+}
+
+.project-item__bullets {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+.project-item__bullets li {
+    margin-bottom: 0.5rem;
+}
+
+.project-item__bullets li:last-child {
+    margin-bottom: 0;
 }
 

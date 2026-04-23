@@ -1,66 +1,108 @@
 ---
 // experience.astro - Experience page
-// Displays education history and work/internship experience
+// Timeline view of Education, Work Experience, and Projects
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Experience | William Hu">
   <div class="experience">
-    <!-- Education Section -->
-    <section class="experience__section">
-      <h2 class="experience__heading">Education</h2>
 
-      <div class="experience__item">
-        <div class="experience__header">
-          <h3 class="experience__title">M.S. in Computer Science</h3>
-          <span class="experience__date">2023 - Present</span>
-        </div>
-        <p class="experience__org">University of Southern California (USC)</p>
-        <ul class="experience__details">
-          <li>Focus on data science and software engineering</li>
-        </ul>
-      </div>
+    <!-- Education Timeline -->
+    <section class="timeline-section">
+      <h2 class="timeline__heading">Education</h2>
+      <div class="timeline">
 
-      <div class="experience__item">
-        <div class="experience__header">
-          <h3 class="experience__title">M.S. in Biology</h3>
-          <span class="experience__date">2019 - 2021</span>
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">M.S. in Computer Science</h3>
+            <span class="timeline__org">University of Southern California (USC)</span>
+            <p class="timeline__date">Sept. 2024 - Present</p>
+          </div>
         </div>
-        <p class="experience__org">National Taiwan University (NTU)</p>
-        <ul class="experience__details">
-          <li><!-- Add details here --></li>
-        </ul>
-      </div>
 
-      <div class="experience__item">
-        <div class="experience__header">
-          <h3 class="experience__title">B.S. in Biology</h3>
-          <span class="experience__date">2015 - 2019</span>
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">M.S. in Biochemistry</h3>
+            <span class="timeline__org">National Taiwan University (NTU)</span>
+            <p class="timeline__date">Sept. 2020 - July 2022</p>
+          </div>
         </div>
-        <p class="experience__org">National Cheng Kung University (NCKU)</p>
-        <ul class="experience__details">
-          <li><!-- Add details here --></li>
-        </ul>
+
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">B.A. in Life Science</h3>
+            <span class="timeline__org">National Cheng Kung University (NCKU)</span>
+            <p class="timeline__date">Sept. 2017 - July 2020</p>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- Work Experience Section -->
-    <section class="experience__section">
-      <h2 class="experience__heading">Work Experience</h2>
+    <!-- Work Experience Timeline -->
+    <section class="timeline-section">
+      <h2 class="timeline__heading">Work Experience</h2>
+      <div class="timeline">
 
-      <div class="experience__item">
-        <div class="experience__header">
-          <h3 class="experience__title"><!-- Job Title --></h3>
-          <span class="experience__date"><!-- Date Range --></span>
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">Software Engineer Intern, WhatsApp: Small Business &amp; CoExistence</h3>
+            <span class="timeline__org">Meta Inc.</span>
+            <p class="timeline__date">May 2025 - Aug. 2025</p>
+          </div>
         </div>
-        <p class="experience__org"><!-- Company Name --></p>
-        <ul class="experience__details">
-          <li><!-- Add responsibilities/achievements here --></li>
-        </ul>
-      </div>
 
-      <!-- Add more work experience items as needed -->
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">Software Engineer, Department of Computer-Integrated Manufacturing (CIM)</h3>
+            <span class="timeline__org">Strong Electro-Mechanical Co., Ltd</span>
+            <p class="timeline__date">Sept. 2022 - May 2024</p>
+          </div>
+        </div>
+
+      </div>
     </section>
+
+    <!-- Projects Timeline -->
+    <section class="timeline-section">
+      <h2 class="timeline__heading">Projects</h2>
+      <div class="timeline">
+
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">Multimedia Processing Projects</h3>
+            <span class="timeline__org">C++, Python, CMake</span>
+            <p class="timeline__date">March 2026</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">Operating Systems Kernel Project (Weenix)</h3>
+            <span class="timeline__org">C, Kernel, VFS, Concurrency</span>
+            <p class="timeline__date">December 2025</p>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__node"></div>
+          <div class="timeline__content">
+            <h3 class="timeline__title">Personal Portfolio Website</h3>
+            <span class="timeline__org">HTML/CSS, Astro, Flask, Jinja</span>
+            <p class="timeline__date">September 2024</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </div>
 </BaseLayout>
